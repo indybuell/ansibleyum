@@ -1,0 +1,13 @@
+--- 
+- hosts: joomla
+  remote_user: ec2-user
+  become: true
+  tasks:
+  - name: "update patches on all machines"
+    yum: name='*' state=latest
+    notify: "restart apache"
+  handlers: 
+  - name: restart apache
+    service: 
+     name=httpd
+     state=restarted
